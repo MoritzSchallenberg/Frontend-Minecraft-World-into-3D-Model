@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-const productRoutes = require("./routes/productRoutes");
+const productRoutes = require("routes/productroutes.js");
 app.use("/api/products", productRoutes);
 
 mongoose.connect("mongodb://127.0.0.1:27017/shopdb", {
