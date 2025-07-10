@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kunden-Login</title>
+
+</head>
+<body>
+  <h1>Profil</h1>
+  
+  <button onclick="logout()">Logout</button>
+
+    <script>
+    function logout() {
+    localStorage.removeItem("currentUser");
+    location.reload();
+    window.location.href = "../index.html";
+    }
+    </script>
+</body>
+</html>

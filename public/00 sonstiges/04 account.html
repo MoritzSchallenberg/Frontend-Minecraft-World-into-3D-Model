@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kunden-Login</title>
+
+</head>
+<body>
+  <h1>Login / Registrierung</h1>
+
+  <div>
+    <input type="text" id="username" placeholder="Benutzername">
+    <input type="password" id="password" placeholder="Passwort">
+    <button onclick="register()">Registrieren</button>
+    <button onclick="login()">Login</button>
+    <p id="status"></p>
+  </div>
+
+  <script>
+    function register() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+      if (!user || !pass) return alert("Bitte Benutzername und Passwort eingeben.");
+      
+      const users = JSON.parse(localStorage.getItem("users")) || {};
+      if (users[user]) {
+        document.getElementById("status").innerText = "Benutzername existiert bereits.";
+      } else {
+        users[user] = pass;
+        localStorage.setItem("users", JSON.stringify(users));
+        document.getElementById("status").innerText = "Registrierung erfolgreich!";
+      }
+    }
+
+    function login() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+
+      const users = JSON.parse(localStorage.getItem("users")) || {};
+      if (users[user] === pass) {
+        localStorage.setItem("currentUser", user);
+        document.getElementById("status").innerText = "Login erfolgreich!";
+        window.location.href = "04 profil.html"; 
+      } else {
+        document.getElementById("status").innerText = "Login fehlgeschlagen.";
+      }
+    }
+  </script>
+</body>
+</html>
