@@ -1,8 +1,3 @@
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send({ error: err.message });
-});
-
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
@@ -17,6 +12,11 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const productRoutes = require("./routes/productroutes");
 app.use("/api/products", productRoutes);
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send({ error: err.message });
+});
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
