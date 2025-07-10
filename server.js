@@ -10,15 +10,16 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-const productRoutes = require("./routes/productroutes.js");
+const productRoutes = require("./routes/productroutes");
 app.use("/api/products", productRoutes);
 
-mongoose.connect("mongodb://127.0.0.1:27017/shopdb", {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: true
 })
-.then(() => console.log("✅ MongoDB verbunden"))
-.catch((err) => console.error("❌ Fehler:", err));
+
+.then(() => console.log('MongoDB connected'))
+.catch((err) => console.error('MongoDB error:', err));
 
 app.listen(PORT, () => {
   console.log(`🚀 Server läuft auf http://localhost:${PORT}`);
