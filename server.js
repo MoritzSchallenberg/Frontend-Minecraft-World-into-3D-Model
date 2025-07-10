@@ -29,3 +29,12 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.listen(PORT, () => {
   console.log(`🚀 Server läuft auf http://localhost:${PORT}`);
 });
+
+// Admin Middleware
+app.use('/06 Admin', (req, res, next) => {
+  const auth = req.headers.authorization;
+  if (!auth || auth !== `Bearer ${process.env.ADMIN_PASSWORD}`) {
+    return res.status(401).send('Zugriff verweigert');
+  }
+  next();
+});
