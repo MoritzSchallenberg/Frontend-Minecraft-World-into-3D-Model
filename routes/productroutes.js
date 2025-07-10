@@ -1,19 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const Product = require("./../models/product.js");
+const Product = require("./../models/product");
 
-// Alle Produkte abrufen
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   const products = await Product.find();
   res.json(products);
 });
 
-// Neues Produkt hinzufügen
-router.post("/add", async (req, res) => {
-  const { name, description, price, image } = req.body;
-  const product = new Product({ name, description, price });
-  await product.save();
-  res.json({ success: true, message: "Produkt gespeichert!" });
+router.post('/add', async (req, res) => {
+  try {
+    const newProduct = new Product(req.body);
+    await newProduct.save();
+    res.json({ success: true });
+  } catch (error) {
+    res.json({ success: false, error });
+  }
 });
 
 module.exports = router;
