@@ -1,0 +1,87 @@
+/* Grundlegende Resets */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Globale Schrift und Farben */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff;
+  color: #333;
+}
+
+/* Logo */
+.main-nav img {
+  height: 50px;
+}
+
+/* Navigation */
+.nav-links a {
+  color: #111;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #555;
+}
+
+/* Navigations-Icons */
+.nav-icons img {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.nav-icons img:hover {
+  transform: scale(1.1);
+}
+
+/* Game-Kreise mit Hintergrundbild */
+.game-circles {
+  background: url('games-bg.jpg') center/cover no-repeat;
+}
+
+/* Bilder in Kreisen */
+.circle {
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(2px);
+}
+
+/* Slider */
+.slider img {
+  object-fit: cover;
+}
+
+/* Produktbilder */
+.product-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.product-item img:hover {
+  transform: scale(1.03);
+}
+
+/* Footer Icons */
+.footer-section img {
+  max-width: 100px;
+  margin-top: 10px;
+}
+
+/* Chatbot Button */
+.chatbot-button {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s;
+}
+
+.chatbot-button:hover {
+  background-color: #333;
+}

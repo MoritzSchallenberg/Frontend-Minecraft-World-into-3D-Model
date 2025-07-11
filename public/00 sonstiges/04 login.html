@@ -1,0 +1,41 @@
+<form id="registerForm">
+  <input type="text" name="name" placeholder="Name" required />
+  <input type="email" name="email" placeholder="E-Mail" required />
+  <input type="password" name="password" placeholder="Passwort" required />
+  <button type="submit">Registrieren</button>
+</form>
+
+<!-- Login-Button -->
+<button id="loginBtn" type="button">Bereits registriert? Zum Login</button>
+
+<script>
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const res = await fetch('/api/user/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: e.target.name.value,
+      email: e.target.email.value,
+      password: e.target.password.value
+    })
+  });
+
+  const data = await res.json();
+  alert(data.message);
+
+  if (res.ok) {
+    // Erfolgreich registriert → weiterleiten zur Startseite
+    window.location.href = '/index.html';
+  }
+});
+
+// Login-Button führt zurück zur Hauptseite oder Loginseite
+document.getElementById('loginBtn').addEventListener('click', () => {
+  // Entweder zur Hauptseite:
+  window.location.href = '/index.html';
+
+  // Oder zu einer separaten Loginseite:
+  // window.location.href = '/login.html';
+});
+</script>
