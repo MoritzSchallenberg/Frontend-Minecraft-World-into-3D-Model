@@ -15,7 +15,6 @@
 
   <p>Noch kein Konto? <a href="#" onclick="toggleForms()">Hier registrieren</a></p>
 
-  <!-- REGISTRIERUNG -->
   <div id="registerSection" style="display:none;">
     <h2>Registrieren</h2>
     <form id="registerForm">
@@ -32,7 +31,6 @@ function toggleForms() {
   reg.style.display = reg.style.display === 'none' ? 'block' : 'none';
 }
 
-// LOGIN
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const res = await fetch('/api/user/login', {
@@ -55,7 +53,6 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   }
 });
 
-// REGISTRIERUNG
 document.getElementById('registerForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const res = await fetch('/api/user/register', {
