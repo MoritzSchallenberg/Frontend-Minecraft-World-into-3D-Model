@@ -1,21 +1,30 @@
-<h2>Login</h2>
-<form id="loginForm">
-  <input type="email" name="email" placeholder="E-Mail" required />
-  <input type="password" name="password" placeholder="Passwort" required />
-  <button type="submit">Einloggen</button>
-</form>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login & Registrierung</title>
+</head>
+<body>
 
-<p>Noch kein Konto? <a href="#" onclick="toggleForms()">Hier registrieren</a></p>
-
-<div id="registerSection" style="display:none;">
-  <h2>Registrieren</h2>
-  <form id="registerForm">
-    <input type="text" name="name" placeholder="Name" required />
+  <h2>Login</h2>
+  <form id="loginForm">
     <input type="email" name="email" placeholder="E-Mail" required />
     <input type="password" name="password" placeholder="Passwort" required />
-    <button type="submit">Registrieren</button>
+    <button type="submit">Einloggen</button>
   </form>
-</div>
+
+  <p>Noch kein Konto? <a href="#" onclick="toggleForms()">Hier registrieren</a></p>
+
+  <!-- REGISTRIERUNG -->
+  <div id="registerSection" style="display:none;">
+    <h2>Registrieren</h2>
+    <form id="registerForm">
+      <input type="text" name="name" placeholder="Name" required />
+      <input type="email" name="email" placeholder="E-Mail" required />
+      <input type="password" name="password" placeholder="Passwort" required />
+      <button type="submit">Registrieren</button>
+    </form>
+  </div>
 
 <script>
 function toggleForms() {
@@ -23,6 +32,7 @@ function toggleForms() {
   reg.style.display = reg.style.display === 'none' ? 'block' : 'none';
 }
 
+// LOGIN
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const res = await fetch('/api/user/login', {
@@ -45,6 +55,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   }
 });
 
+// REGISTRIERUNG
 document.getElementById('registerForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const res = await fetch('/api/user/register', {
@@ -65,3 +76,6 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
   }
 });
 </script>
+
+</body>
+</html>
