@@ -1,14 +1,50 @@
-<form id="registerForm">
-  <input type="text" name="name" placeholder="Name" required />
+<h2>Login</h2>
+<form id="loginForm">
   <input type="email" name="email" placeholder="E-Mail" required />
   <input type="password" name="password" placeholder="Passwort" required />
-  <button type="submit">Registrieren</button>
+  <button type="submit">Einloggen</button>
 </form>
 
-<!-- Login-Button -->
-<button id="loginBtn" type="button">Bereits registriert? Zum Login</button>
+<p>Noch kein Konto? <a href="#" onclick="toggleForms()">Hier registrieren</a></p>
+
+<div id="registerSection" style="display:none;">
+  <h2>Registrieren</h2>
+  <form id="registerForm">
+    <input type="text" name="name" placeholder="Name" required />
+    <input type="email" name="email" placeholder="E-Mail" required />
+    <input type="password" name="password" placeholder="Passwort" required />
+    <button type="submit">Registrieren</button>
+  </form>
+</div>
 
 <script>
+function toggleForms() {
+  const reg = document.getElementById('registerSection');
+  reg.style.display = reg.style.display === 'none' ? 'block' : 'none';
+}
+
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const res = await fetch('/api/user/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email: e.target.email.value,
+      password: e.target.password.value
+    })
+  });
+
+  const data = await res.json();
+
+  if (res.ok && data.token) {
+    localStorage.setItem("token", data.token);
+    alert("Login erfolgreich!");
+    window.location.href = "/index.html";
+  } else {
+    alert(data.message || "Fehler beim Login");
+  }
+});
+
 document.getElementById('registerForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const res = await fetch('/api/user/register', {
@@ -25,17 +61,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
   alert(data.message);
 
   if (res.ok) {
-    // Erfolgreich registriert → weiterleiten zur Startseite
     window.location.href = '/index.html';
   }
-});
-
-// Login-Button führt zurück zur Hauptseite oder Loginseite
-document.getElementById('loginBtn').addEventListener('click', () => {
-  // Entweder zur Hauptseite:
-  window.location.href = '/index.html';
-
-  // Oder zu einer separaten Loginseite:
-  // window.location.href = '/login.html';
 });
 </script>
