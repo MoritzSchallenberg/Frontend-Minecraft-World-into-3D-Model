@@ -3,6 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <title>Login & Registrierung</title>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+    const res = await fetch('https://threed-spiele-2.onrender.com/api/user/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: e.target.email.value,
+        password: e.target.password.value
+      })
+    });
+
+    let data;
+    try {
+      data = await res.json();
+    } catch (err) {
+      alert("Serverfehler – keine gültige Antwort");
+      return;
+    }
+
+    if (!res.ok) {
+      alert(data.message || "Fehler beim Login");
+      return;
+    }
+
+    localStorage.setItem("token", data.token);
+    alert("Login erfolgreich!");
+    window.location.href = "/index.html";
+  });
+  </script>
 </head>
 <body>
 
@@ -15,6 +46,7 @@
 
   <p>Noch kein Konto? <a href="#" onclick="toggleForms()">Hier registrieren</a></p>
 
+  <!-- REGISTRIERUNG -->
   <div id="registerSection" style="display:none;">
     <h2>Registrieren</h2>
     <form id="registerForm">
@@ -31,6 +63,7 @@ function toggleForms() {
   reg.style.display = reg.style.display === 'none' ? 'block' : 'none';
 }
 
+// LOGIN
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const res = await fetch('/api/user/login', {
@@ -53,6 +86,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   }
 });
 
+// REGISTRIERUNG
 document.getElementById('registerForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const res = await fetch('/api/user/register', {
