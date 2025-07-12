@@ -347,26 +347,22 @@
   </style>
   
   <script>
-  function toggleFavorit(button) {
-    const produktDiv = button.closest(".product-item");
-    const produktId = produktDiv.dataset.id;
-    const produktKategorie = produktDiv.dataset.kategorie;
-    const produktHtml = produktDiv.outerHTML;
+    function toggleFavorit(id, name, description, price) {
+      let favoriten = JSON.parse(localStorage.getItem("favoriten")) || [];
 
-    let favoriten = JSON.parse(localStorage.getItem("favoriten")) || [];
+      const index = favoriten.findIndex(p => p.id === id);
+      if (index !== -1) {
+        favoriten.splice(index, 1);
+        alert("Aus Favoriten entfernt!");
+      } else {
+        favoriten.push({ id, name, description, price });
+        alert("Zu Favoriten hinzugefügt!");
+      }
 
-    const index = favoriten.findIndex(p => p.id === produktId);
-    if (index !== -1) {
-      favoriten.splice(index, 1);
-    } else {
-      favoriten.push({ id: produktId, kategorie: produktKategorie, html: produktHtml });
+      localStorage.setItem("favoriten", JSON.stringify(favoriten));
     }
+    </script>
 
-    localStorage.setItem("favoriten", JSON.stringify(favoriten));
-    alert("Favorit gespeichert!");
-  }
-  </script>
-  
   <script>
   function addToCart(name, price) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
