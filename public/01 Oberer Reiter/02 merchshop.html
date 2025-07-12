@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PrintYourGame – Dein Game-Welt-Druck</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff;
+      color: #333;
+    }
+
+    header {
+      background-color: #000;
+      color: white;
+      padding: 10px 20px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .top-bar {
+      background-color: #000;
+      color: white;
+      padding: 5px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .top-bar a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    .main-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background-color: white;
+      border-bottom: 1px solid #eee;
+      position: relative;
+    }
+
+    .main-nav img {
+      height: 50px;
+    }
+
+    .nav-links {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: black;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .nav-icons {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .nav-icons img {
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+    }
+
+    .label {
+      position: absolute;
+      top: 35px;
+      left: 20px;
+      z-index: 1;
+      color: white;
+      font-size: 20px;
+      pointer-events: none;
+    }
+
+    .prev {
+      left: 10px;
+    }
+
+    .next {
+      right: 10px;
+    }
+
+    .product-heading {
+      background-color: #f9f9f9;
+      padding: 20px 10%;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    .product-listing {
+      padding: 0 10% 40px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      background-color: #f9f9f9;
+    }
+
+    .product-item {
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .product-item img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+
+    .product-item h4 {
+      margin: 10px 0 5px;
+    }
+
+    .product-item p {
+      color: #777;
+      font-size: 14px;
+    }
+
+    .footer {
+      background-color: #000;
+      color: white;
+      padding: 60px 40px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .footer-section {
+      flex: 1;
+      min-width: 200px;
+      margin-bottom: 20px;
+    }
+
+    .footer-section h4 {
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+
+    .footer-section a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .footer-section a:hover {
+      text-decoration: underline;
+    }
+
+    .newsletter input[type="email"] {
+      padding: 10px;
+      width: 70%;
+      border: none;
+      margin-right: 10px;
+    }
+
+    .newsletter button {
+      padding: 10px;
+      border: none;
+      background-color: white;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .chatbot-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #000;
+      color: white;
+      font-size: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 1000;
+    }
+  </style>
+  <script>
+    let currentSlide = 0;
+    function showSlide(index) {
+      const slides = document.querySelector('.slides');
+      const totalSlides = slides.children.length;
+      currentSlide = (index + totalSlides) % totalSlides;
+      slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+
+    function nextSlide() {
+      showSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      showSlide(currentSlide - 1);
+    }
+
+    setInterval(() => nextSlide(), 5000);
+  </script>
+</head>
+<body>
+  <header>
+    Aufgrund des hohen Bestellaufkommens kann es noch vereinzelt zu längeren Lieferzeiten kommen. Wir bitten um Verständnis.
+  </header>
+
+  <div class="top-bar">
+    <div>
+      <span>Logo In-Account</span>
+      <span>Logo Ti-Account</span>
+      <span>Logo Fa-Account</span>
+      <span>Logo Tw-Account</span>
+    </div>
+    <div>
+      <span>✔ 14-Tage Rückgaberecht</span>
+      <span>✔ 5–7 Tage bei dir</span>
+      <span>✔ Ratenkauf möglich</span>
+    </div>
+  </div>
+
+  <div class="main-nav">
+    <img src="logo.png" alt="PrintYourGame Logo" />
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../01 Oberer Reiter/01 spiele.html">Spiele</a>
+      <a href="../01 Oberer Reiter/02 merchshop.html">Merch Store</a>
+      <a href="../01 Oberer Reiter/03 partnershops.html">Partnershops</a>
+      <a href="../01 Oberer Reiter/04 überuns.html">Über uns</a>
+      <a href="../01 Oberer Reiter/05 news.html">News</a>
+    </div>
+    <div class="nav-icons">
+      <img src="img/search.png" alt="Suche" />
+      <a href="../00 sonstiges/02 favoriten.html" style="position: relative; display: inline-block;">
+        <img src="heart.png" " style="width: 30px; height: 30px;" />
+        <span id="cart-count" style="
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background-color: red;
+          color: white;
+          font-size: 12px;
+          padding: 2px 6px;
+          border-radius: 50%;
+          display: none;
+        ">0</span>
+      </a>
+      <a href="#" onclick="openCart(); return false;" style="position: relative; display: inline-block;">
+        <img src="img/cart.png" " style="width: 30px; height: 30px;" />
+        <span id="cart-count" style="
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background-color: red;
+          color: white;
+          font-size: 12px;
+          padding: 2px 6px;
+          border-radius: 50%;
+          display: none;
+        ">0</span>
+      </a>
+      <div class="nav-icons">
+        <a id="loginLink" href="../00 sonstiges/04 login.html">
+          <img src="img/account-default.png" alt="Login" style="width: 30px; height: 30px;" />
+          <span id="cart-count" style="
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 50%;
+            display: none;
+          ">0</span>
+        </a>
+        <div id="accountMenu" style="display: none; position: relative;">
+          <img src="img/account-loggedin.png" class="account-icon" id="accountIcon" onclick="toggleDropdown()" style="width: 30px; height: 30px;" />
+          <div class="dropdown" id="dropdownMenu" style="display: none; position: absolute; top: 35px; right: 0; background: white; border: 1px solid #ccc; border-radius: 5px;">
+            <a href="profil.html">👤 Mein Profil</a>
+            <a href="bestellungen.html">📦 Bestellungen</a>
+            <a href="bewertungen.html">⭐ Bewertungen</a>
+            <a href="#" onclick="logout()">🚪 Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="product-heading">Beliebte Merch Produkte</div>
+    <section class="product-listing">
+    <a href="../03 Produkte/01 Minecraft/Produkt 1.html" class="product-item">
+      <div class="product-item">
+      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 1">
+      <h4>Custom Terrain</h4>
+      <p>€39,95</p>
+      </div>
+    </a>
+    <a href="../03 Produkte/01 Minecraft/Produkt 2" class="product-item">
+      <div class="product-item">
+      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 2">
+      <h4>Custom Terrain</h4>
+      <p>€39,95</p>
+      </div>
+    </a>
+    <a href="../03 Produkte/01 Minecraft/Produkt 3" class="product-item">
+      <div class="product-item">
+      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 3">
+      <h4>Custom Terrain</h4>
+      <p>€39,95</p>
+      </div>
+    </a>
+    <a href="../03 Produkte/01 Minecraft/Produkt 4.html" class="product-item">
+      <div class="product-item">
+      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 4">
+      <h4>Custom Terrain</h4>
+      <p>€39,95</p>
+      </div>
+    </a>
+    <a href="../03 Produkte/01 Minecraft/Produkt 5.html" class="product-item">
+      <div class="product-item">
+      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 5">
+      <h4>Custom Terrain</h4>
+      <p>€39,95</p>
+      </div>
+    </a>
+    <a href="../03 Produkte/01 Minecraft/Produkt 6.html" class="product-item">
+      <div class="product-item">
+      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 6">
+      <h4>Custom Terrain</h4>
+      <p>€39,95</p>
+      </div>
+    </a>
+    <a href="../03 Produkte/01 Minecraft/Produkt 7.html" class="product-item">
+      <div class="product-item">
+      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 7">
+      <h4>Custom Terrain</h4>
+      <p>€39,95</p>
+      </div>
+    </a>
+    <a href="../03 Produkte/01 Minecraft/Produkt 8.html" class="product-item">
+      <div class="product-item">
+      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 8">
+      <h4>Custom Terrain</h4>
+      <p>€39,95</p>
+      </div>
+    </a>
+  </section>
+
+  <div class="product-heading">Beliebte Merch Produkte</div>
+    <section class="product-listing">
+    <a href="../01 Minecraft/Produkt 1.html" class="product-item">
+      <div class="product-item">
+      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 1">
+      <h4>Custom Terrain</h4>
+      <p>€39,95</p>
+      </div>
+    </a>
+    <a href="../01 Minecraft/Produkt 2.html" class="product-item">
+      <div class="product-item">
+      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 2">
+      <h4>Custom Terrain</h4>
+      <p>€39,95</p>
+      </div>
+    </a>
+    <a href="../02 Sims/Produkt 1.html" class="product-item">
+      <div class="product-item">
+      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 3">
+      <h4>Custom Terrain</h4>
+      <p>€39,95</p>
+      </div>
+    </a>
+    <a href="../02 Sims/Produkt 2.html" class="product-item">
+      <div class="product-item">
+      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 4">
+      <h4>Custom Terrain</h4>
+      <p>€39,95</p>
+      </div>
+    </a>
+    <a href="../03 Roblox/Produkt 1.html" class="product-item">
+      <div class="product-item">
+      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 5">
+      <h4>Custom Terrain</h4>
+      <p>€39,95</p>
+      </div>
+    </a>
+    <a href="../03 Roblox/Produkt 2.html" class="product-item">
+      <div class="product-item">
+      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 6">
+      <h4>Custom Terrain</h4>
+      <p>€39,95</p>
+      </div>
+    </a>
+    <a href="../04 Clash of Clans/Produkt 1.html" class="product-item">
+      <div class="product-item">
+      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 7">
+      <h4>Custom Terrain</h4>
+      <p>€39,95</p>
+      </div>
+    </a>
+    <a href="../04 Clash of Clans/Produkt 2.html" class="product-item">
+      <div class="product-item">
+      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 8">
+      <h4>Custom Terrain</h4>
+      <p>€39,95</p>
+      </div>
+    </a>
+  </section>
+
+  <div class="chatbot-button" onclick="alert('Willkommen im FAQ-Chat! Was möchtest du wissen?')">💬</div>
+
+  <footer class="footer">
+    <div class="footer-section newsletter">
+      <h4>NEWSLETTER</h4>
+      <p>Abonniere unseren Newsletter 💗</p>
+      <input type="email" placeholder="Deine E-Mail" />
+      <button>Anmelden</button>
+    </div>
+
+    <div class="footer-section">
+      <h4>RECHTLICHES</h4>
+      <a href="../04 Rechtliches/01 Impressum.html">Impressum</a>
+      <a href="../04 Rechtliches/02 datenschutzerklärung.html">Datenschutzerklärung</a>
+      <a href="../04 Rechtliches/03 widerrufsbelehrung.html">Widerrufsbelehrung</a>
+      <a href="../04 Rechtliches/04 agb.html">AGB</a>
+      <a href="../04 Rechtliches/05 versand, zahlung & Lieferfristen.html">Versand, Zahlung & Lieferfristen</a>
+      <a href="../04 Rechtliches/06 cookie einstellungen.html">Cookie Einstellungen</a>
+    </div>
+
+    <div class="footer-section">
+      <h4>KUNDENSERVICE</h4>
+      <a href="../05 Kundenservice/01 faq.html">FAQ</a>
+      <a href="../05 Kundenservice/02 kontakt.html">Kontakt</a>
+      <a href="../05 Kundenservice/03 retourenportal.html">Retourenportal</a>
+    </div>
+
+    <div class="footer-section">
+      <h4>ONLINE SHOP SERVICE</h4>
+      <p><strong>Hast du eine Frage?</strong><br />
+        Schreibe uns eine E-Mail an <a href="mailto:kontakt@printyourgame.de">kontakt@printyourgame.de</a><br />
+        oder ruf uns an: <a href="tel:+491600000000">+49 160 0000000</a>
+      </p>
+      <p>Wir akzeptieren:</p>
+      <img src="paypal.png" alt="PayPal" />
+    </div>
+  </footer>
+</body>
+</html>
