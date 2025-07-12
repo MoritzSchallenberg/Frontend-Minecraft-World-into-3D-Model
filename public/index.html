@@ -497,7 +497,8 @@
         const el = document.createElement("div");
         el.className = "product-item";
         el.innerHTML = `
-          <img src="bilder/produkt2_vorne.jpg" alt="${p.name}" />
+        <button onclick="toggleFavorit('${p._id}', '${p.name}', '${p.description}', ${p.price})">❤️ Favorit</button>  
+        <img src="bilder/produkt2_vorne.jpg" alt="${p.name}" />
           <h4>${p.name}</h4>
           <p>${p.description}</p>
           <p><strong>${p.price.toFixed(2)} €</strong></p>
@@ -646,70 +647,6 @@
     <section class="product-listing" id="product-list">
       <!-- Produkte werden hier dynamisch eingefügt -->
     </section>
-
-  <div class="product-heading">Beliebte Merch Produkte</div>
-
-  <section class="product-listing">
-    <div class="product-item" data-id="minecraft-1" data-kategorie="Minecraft">
-      <button onclick="toggleFavorit(this)">❤</button>
-      <a href="03 Produkte/01 Minecraft/Produkt 1.html">
-        <img src="bilder/produkt2_vorne.jpg" alt="Produkt 1">
-        <h4>Custom Terrain</h4>
-        <p>€39,95</p>
-      </a>
-      <button onclick="addToCart('Minecraft Figur A', 14.99)">In den Warenkorb</button>
-    </div>
-    
-    <a href="03 Produkte/01 Minecraft/Produkt 2.html" class="product-item">
-      <div class="product-item">
-      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 2">
-      <h4>Custom Terrain</h4>
-      <p>€39,95</p>
-      </div>
-    </a>
-    <a href="03 Produkte/02 Sims/Produkt 1.html" class="product-item">
-      <div class="product-item">
-      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 3">
-      <h4>Custom Terrain</h4>
-      <p>€39,95</p>
-      </div>
-    </a>
-    <a href="03 Produkte/02 Sims/Produkt 2.html" class="product-item">
-      <div class="product-item">
-      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 4">
-      <h4>Custom Terrain</h4>
-      <p>€39,95</p>
-      </div>
-    </a>
-    <a href="03 Produkte/03 Roblox/Produkt 1.html" class="product-item">
-      <div class="product-item">
-      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 5">
-      <h4>Custom Terrain</h4>
-      <p>€39,95</p>
-      </div>
-    </a>
-    <a href="03 Produkte/03 Roblox/Produkt 2.html" class="product-item">
-      <div class="product-item">
-      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 6">
-      <h4>Custom Terrain</h4>
-      <p>€39,95</p>
-      </div>
-    </a>
-    <a href="03 Produkte/04 Clash of Clans/Produkt 1.html" class="product-item">
-      <div class="product-item">
-      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 7">
-      <h4>Custom Terrain</h4>
-      <p>€39,95</p>
-      </div>
-    </a>
-    <a href="03 Produkte/04 Clash of Clans/Produkt 2.html" class="product-item">
-      <div class="product-item">
-      <img src="bilder/produkt2_vorne.jpg" alt="Produkt 8">
-      <h4>Custom Terrain</h4>
-      <p>€39,95</p>
-      </div>
-    </a>
-  </section>
 
   <div class="chatbot-button" onclick="alert('Willkommen im FAQ-Chat! Was möchtest du wissen?')">💬</div>
 
