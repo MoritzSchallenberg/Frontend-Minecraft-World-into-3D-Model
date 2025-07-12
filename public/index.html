@@ -471,21 +471,15 @@
 
     document.addEventListener("DOMContentLoaded", () => {
       const token = localStorage.getItem("token");
-      const accountIcon = document.getElementById("accountIcon");
-      const dropdown = document.getElementById("dropdownMenu");
+      const loginLink = document.getElementById("loginLink");
+      const accountMenu = document.getElementById("accountMenu");
 
       if (token) {
-        accountIcon.src = "img/account-loggedin.png"; // z. B. ein Profilbild-Icon
+        loginLink.style.display = "none";
+        accountMenu.style.display = "block";
       } else {
-        accountIcon.src = "img/account-default.png";
-        dropdown.remove(); // Menü entfernen, wenn nicht eingeloggt
-      }
-    });
-
-    document.addEventListener("click", function(event) {
-      const menu = document.getElementById("accountMenu");
-      if (!menu.contains(event.target)) {
-        document.getElementById("dropdownMenu").style.display = "none";
+        loginLink.style.display = "inline-block";
+        accountMenu.style.display = "none";
       }
     });
   </script>
