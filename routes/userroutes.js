@@ -2,6 +2,8 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const authMiddleware = require('../middleware/authMiddleware');
+
 const router = express.Router();
 
 // Registrierung
@@ -26,9 +28,7 @@ router.post('/login', async (req, res) => {
   res.json({ token });
 });
 
-module.exports = router;
-
-
+// Nutzer-Daten aktualisieren (geschützt durch Middleware)
 router.put('/me', authMiddleware, async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(
@@ -48,3 +48,5 @@ router.put('/me', authMiddleware, async (req, res) => {
     res.status(500).send("Fehler beim Aktualisieren.");
   }
 });
+
+module.exports = router;
