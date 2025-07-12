@@ -483,6 +483,35 @@
       }
     });
   </script>
+
+  <script>
+    async function ladeProdukte() {
+      try {
+      const res = await fetch("/api/products");
+      const produkte = await res.json();
+      const container = document.getElementById("product-list");
+
+      container.innerHTML = "";
+
+      produkte.forEach(p => {
+        const el = document.createElement("div");
+        el.className = "product-item";
+        el.innerHTML = `
+          <img src="bilder/produkt2_vorne.jpg" alt="${p.name}" />
+          <h4>${p.name}</h4>
+          <p>${p.description}</p>
+          <p><strong>${p.price.toFixed(2)} €</strong></p>
+          <button onclick="addToCart('${p.name}', ${p.price})">In den Warenkorb</button>
+        `;
+        container.appendChild(el);
+      });
+    } catch (err) {
+      console.error("Fehler beim Laden der Produkte:", err);
+    }
+  }
+
+  ladeProdukte();
+  </script>
 </head>
 
 <body>
@@ -612,6 +641,11 @@
     </div>
     <button class="next" onclick="nextSlide()">❯</button>
   </section>
+
+  <div class="product-heading">Beliebte Produkte</div>
+    <section class="product-listing" id="product-list">
+      <!-- Produkte werden hier dynamisch eingefügt -->
+    </section>
 
   <div class="product-heading">Beliebte Merch Produkte</div>
 
