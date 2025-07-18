@@ -1,3 +1,4 @@
+  function login() {  
     // Token aus localStorage holen und Seite neu laden mit Auth
     const token = localStorage.getItem('adminToken');
     if (!token) location.href = '06 Admin/adminlogin.html';
@@ -18,6 +19,7 @@
       alert('Zugriff verweigert – zurück zum Login');
       location.href = '06 Admin/adminlogin.html';
     });
+  }  
     
     function login() {
       const password = document.getElementById('adminPassword').value;
