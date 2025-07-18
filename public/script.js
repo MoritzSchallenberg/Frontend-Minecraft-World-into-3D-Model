@@ -1,4 +1,4 @@
-  function login() {  
+  function adminlogin() {  
     // Token aus localStorage holen und Seite neu laden mit Auth
     const token = localStorage.getItem('adminToken');
     if (!token) location.href = '06 Admin/adminlogin.html';
