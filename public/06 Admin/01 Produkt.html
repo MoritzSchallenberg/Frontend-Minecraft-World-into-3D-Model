@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PrintYourGame – Dein Game-Welt-Druck</title>
+  <link rel="stylesheet" href="../admin.css" />
+  <script src="../admin.js"></script>
+</head>
+  
+<body>
+  <div class="main-nav">
+    <img src="logo.png" alt="PrintYourGame Logo" />
+    <div class="nav-links">
+      <a href="../admin.html">Overview</a>
+      <a href="01 Produkt.html">Produkt</a>
+      <a href="02 Kunden.html">Kunden</a>
+      <a href="03 Bestellungen.html">Bestellungen</a>
+      <a href="04 Versand&Steuern.html">Versand & Steuern</a>
+      <a href="05 Partnerstores.html">Partnerstores</a>
+    </div>
+    <div>
+      <span>Admin Login</span>
+    </div>
+  </div>
+  
+  <h1>Neues Produkt hinzufügen</h1>
+
+  <form id="productForm">
+    <label>Produktname:<br>
+      <input type="text" name="name" required>
+    </label><br><br>
+
+    <label>Beschreibung:<br>
+      <textarea name="description" required></textarea>
+    </label><br><br>
+
+    <label>Preis (z. B. 9.99):<br>
+      <input type="number" name="price" step="0.01" required>
+    </label><br><br>
+
+    <button type="submit">Produkt speichern</button>
+  </form>
+
+  <p id="message"></p>
+  
+  <h1>Produktübersicht</h1>
+  <div id="product-list"></div>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById('productForm');
+    const message = document.getElementById('message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      const response = await fetch('/api/products/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        message.textContent = "✅ Produkt erfolgreich gespeichert!";
+        form.reset();
+        loadProducts(); // aktualisiert die Liste nach dem Speichern
+      } else {
+        message.textContent = "❌ Fehler beim Speichern.";
+      }
+    });
+
+    // Produkte laden & anzeigen
+    async function loadProducts() {
+      const container = document.getElementById("product-list");
+      container.innerHTML = "";
+      try {
+        const res = await fetch("/api/products");
+        const data = await res.json();
+        data.forEach(product => {
+          const el = document.createElement("div");
+          el.classList.add("product-item");
+          el.innerHTML = `<h3>${product.name}</h3><p>${product.description}</p><strong>${product.price} €</strong>`;
+          container.appendChild(el);
+        });
+      } catch (err) {
+        console.error("Fehler beim Laden der Produkte:", err);
+        container.innerHTML = "<p style='color:red;'>Fehler beim Laden der Produkte.</p>";
+      }
+    }
+    loadProducts(); // beim Seitenladen aufrufen
+  });
+  </script>
+</body>
+</html>
