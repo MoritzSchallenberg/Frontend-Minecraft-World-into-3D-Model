@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PrintYourGame – Dein Game-Welt-Druck</title>
+  <link rel="stylesheet" href="../style.css" />
+  <script src="../script.js"></script>
+</head>
+  
+<body>
+  <div id="cart-overlay" style="
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 320px;
+    height: 100%;
+    background: rgb(255, 255, 255);
+    box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+    transition: right 0.3s ease;
+    z-index: 9999;
+    padding: 20px;
+    overflow-y: auto;
+  ">
+    <h2>Warenkorb</h2>
+    <div id="cart-content"></div>
+    <button onclick="closeCart()" style="margin-top: 20px;">Schließen</button>
+  </div>
+  
+  <div class="top-bar">
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="../img/Instagramm.png" alt="Account Instagramm" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="../img/Twitter.png" alt="Account Twitter" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="../img/Tiktok.png" alt="Account Tiktok" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="../img/Youtube.png" alt="Account Youtube" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="../img/Pinterrest.png" alt="Account Pinterrest" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="../img/Facebook.png" alt="Account Facebook" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+  </div>
+
+  <div class="main-nav">
+    <a href="../index.html">
+      <img src="../img/logo.png" alt="PrintYourGame Logo" />
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../01 Oberer Reiter/01 Inspiration.html">Inspiration</a>
+      <a href="../01 Oberer Reiter/02 Start Gameprinter.html">Gameprinter</a>
+      <a href="../01 Oberer Reiter/03 merchshop.html">Unsere Produkte</a>
+      <a href="../01 Oberer Reiter/04 partnerstores.html">Partnerstores</a>
+      <a href="../01 Oberer Reiter/05 news.html">News</a>
+    </div>
+    <div class="nav-icons">
+      <img src="../img/search.png" alt="Suche" />
+      <a href="../00 sonstiges/02 favoriten.html" style="position: relative; display: inline-block;">
+        <img src="heart.png" " style="width: 40px; height: 30px;" />
+        <span id="cart-count" style="
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background-color: red;
+          color: rgb(0, 0, 0);
+          font-size: 12px;
+          padding: 2px 6px;
+          border-radius: 50%;
+          display: none;
+        ">0</span>
+      </a>
+      <a href="#" onclick="openCart(); return false;" style="position: relative; display: inline-block;">
+        <img src="../img/cart.png" " style="width: 30px; height: 30px;" />
+        <span id="cart-count" style="
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background-color: red;
+          color: rgb(0, 0, 0);
+          font-size: 12px;
+          padding: 2px 6px;
+          border-radius: 50%;
+          display: none;
+        ">0</span>
+      </a>
+      <a id="loginLink" href="../00 sonstiges/04 login.html">
+        <img src="../img/account-default.png" style="width: 30px; height: 30px;" />
+        <span id="cart-count" style="
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background-color: red;
+          color: rgb(0, 0, 0);
+          font-size: 12px;
+          padding: 2px 6px;
+          border-radius: 50%;
+          display: none;
+        ">0</span>
+      </a>
+      <div id="accountMenu" style="display: none; position: relative;">
+        <img src="../img/account-loggedin.png" class="account-icon" id="accountIcon" onclick="toggleDropdown()" style="width: 30px; height: 30px;" />
+        <div class="dropdown" id="dropdownMenu" style="display: none; position: absolute; top: 35px; right: 0; background: white; border: 1px solid #ccc; border-radius: 5px;">
+          <a href="../00 sonstiges/04 profil.html">👤 Mein Profil</a>
+          <a href="../00 sonstiges/05 bestellungen.html">📦 Bestellungen</a>
+          <a href="../00 sonstiges/06 Bewertungen.html">⭐ Bewertungen</a>
+          <a href="../00 sonstiges/07 Einstellungen.html"> Kontoeinstellungen</a>
+          <a href="#" onclick="logout()">🚪 Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <section class="section">
+    <h2>Kontakt</h2>
+    <p>Du hast Fragen zu deiner Bestellung, zum Gameprinter oder möchtest uns Feedback geben? Dann schreib uns einfach über das folgende Formular oder direkt per E-Mail.</p>
+    <form id="contact-form">
+      <label for="name">Dein Name</label><br>
+      <input type="text" id="name" name="name" required><br><br>
+      <label for="email">Deine E-Mail</label><br>
+      <input type="email" id="email" name="email" required><br><br>
+      <label for="message">Nachricht</label><br>
+      <textarea id="message" name="message" rows="6" required></textarea><br><br>
+      <button type="submit">Nachricht senden</button>
+      <p id="contact-success" style="color: green; display: none;">Danke! Wir melden uns bald bei dir.</p>
+    </form>
+    <hr>
+    <p><strong>Alternativ per E-Mail:</strong><br>
+    <a href="mailto:deine@email.de">deine@email.de</a></p>
+    <p><strong>Postanschrift:</strong><br>
+    [Dein Name / Firma]<br>
+    [Straße, Hausnummer]<br>
+    [PLZ Ort]</p>
+  </section>
+
+  <div class="chatbot-button" onclick="alert('Willkommen im FAQ-Chat! Was möchtest du wissen?')">💬</div>
+
+  <footer class="footer">
+    <div class="footer-section newsletter">
+      <h4>NEWSLETTER</h4>
+      <p>Abonniere unseren Newsletter 💗</p>
+      <input type="email" placeholder="Deine E-Mail" />
+      <button>Anmelden</button>
+    </div>
+
+    <div class="footer-section">
+      <h4>RECHTLICHES</h4>
+      <a href="../04 Rechtliches/01 Impressum.html">Impressum</a>
+      <a href="../04 Rechtliches/02 datenschutzerklärung.html">Datenschutzerklärung</a>
+      <a href="../04 Rechtliches/03 widerrufsbelehrung.html">Widerrufsbelehrung</a>
+      <a href="../04 Rechtliches/04 agb.html">AGB</a>
+      <a href="../04 Rechtliches/05 versand, zahlung & Lieferfristen.html">Versand, Zahlung & Lieferfristen</a>
+      <a href="../04 Rechtliches/06 cookie einstellungen.html">Cookie Einstellungen</a>
+    </div>
+
+    <div class="footer-section">
+      <h4>KUNDENSERVICE</h4>
+      <a href="../05 Kundenservice/01 faq.html">FAQ</a>
+      <a href="../05 Kundenservice/02 kontakt.html">Kontakt</a>
+      <a href="../05 Kundenservice/03 retourenportal.html">Retourenportal</a>
+    </div>
+
+    <div class="footer-section">
+      <h4>ONLINE SHOP SERVICE</h4>
+      <p><strong>Hast du eine Frage?</strong><br />
+        Schreibe uns eine E-Mail an <a href="mailto:kontakt@printyourgame.de">kontakt@printyourgame.de</a><br />
+        oder ruf uns an: <a href="tel:+491600000000">+49 160 0000000</a>
+      </p>
+      <p>Wir akzeptieren:</p>
+      <img src="paypal.png" alt="Visa" />
+      <img src="paypal.png" alt="PayPal" />
+      <img src="paypal.png" alt="Debit-Card" />
+      <img src="paypal.png" alt="Apple Pay" />
+      <img src="paypal.png" alt="Google Pay" />
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PrintYourGame – Dein Game-Welt-Druck</title>
+  <link rel="stylesheet" href="../style.css" />
+  <script src="../script.js"></script>
+</head>
+  
+<body>
+  <div id="cart-overlay" style="
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 320px;
+    height: 100%;
+    background: rgb(255, 255, 255);
+    box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+    transition: right 0.3s ease;
+    z-index: 9999;
+    padding: 20px;
+    overflow-y: auto;
+  ">
+    <h2>Warenkorb</h2>
+    <div id="cart-content"></div>
+    <button onclick="closeCart()" style="margin-top: 20px;">Schließen</button>
+  </div>
+  
+  <div class="top-bar">
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="../img/Instagramm.png" alt="Account Instagramm" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="../img/Twitter.png" alt="Account Twitter" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="../img/Tiktok.png" alt="Account Tiktok" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="../img/Youtube.png" alt="Account Youtube" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="../img/Pinterrest.png" alt="Account Pinterrest" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="../img/Facebook.png" alt="Account Facebook" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+  </div>
+
+  <div class="main-nav">
+    <a href="../index.html">
+      <img src="../img/logo.png" alt="PrintYourGame Logo" />
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../01 Oberer Reiter/01 Inspiration.html">Inspiration</a>
+      <a href="../01 Oberer Reiter/02 Start Gameprinter.html">Gameprinter</a>
+      <a href="../01 Oberer Reiter/03 merchshop.html">Unsere Produkte</a>
+      <a href="../01 Oberer Reiter/04 partnerstores.html">Partnerstores</a>
+      <a href="../01 Oberer Reiter/05 news.html">News</a>
+    </div>
+    <div class="nav-icons">
+      <img src="../img/search.png" alt="Suche" />
+      <a href="../00 sonstiges/02 favoriten.html" style="position: relative; display: inline-block;">
+        <img src="heart.png" " style="width: 40px; height: 30px;" />
+        <span id="cart-count" style="
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background-color: red;
+          color: rgb(0, 0, 0);
+          font-size: 12px;
+          padding: 2px 6px;
+          border-radius: 50%;
+          display: none;
+        ">0</span>
+      </a>
+      <a href="#" onclick="openCart(); return false;" style="position: relative; display: inline-block;">
+        <img src="../img/cart.png" " style="width: 30px; height: 30px;" />
+        <span id="cart-count" style="
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background-color: red;
+          color: rgb(0, 0, 0);
+          font-size: 12px;
+          padding: 2px 6px;
+          border-radius: 50%;
+          display: none;
+        ">0</span>
+      </a>
+      <a id="loginLink" href="../00 sonstiges/04 login.html">
+        <img src="../img/account-default.png" style="width: 30px; height: 30px;" />
+        <span id="cart-count" style="
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background-color: red;
+          color: rgb(0, 0, 0);
+          font-size: 12px;
+          padding: 2px 6px;
+          border-radius: 50%;
+          display: none;
+        ">0</span>
+      </a>
+      <div id="accountMenu" style="display: none; position: relative;">
+        <img src="../img/account-loggedin.png" class="account-icon" id="accountIcon" onclick="toggleDropdown()" style="width: 30px; height: 30px;" />
+        <div class="dropdown" id="dropdownMenu" style="display: none; position: absolute; top: 35px; right: 0; background: white; border: 1px solid #ccc; border-radius: 5px;">
+          <a href="../00 sonstiges/04 profil.html">👤 Mein Profil</a>
+          <a href="../00 sonstiges/05 bestellungen.html">📦 Bestellungen</a>
+          <a href="../00 sonstiges/06 Bewertungen.html">⭐ Bewertungen</a>
+          <a href="../00 sonstiges/07 Einstellungen.html"> Kontoeinstellungen</a>
+          <a href="#" onclick="logout()">🚪 Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <section class="section">
+    <h2>Datenschutzerklärung</h2>
+    <p><strong>1. Datenschutz auf einen Blick</strong></p>
+    <p>
+      Der Schutz Ihrer persönlichen Daten ist uns wichtig. Nachfolgend informieren wir Sie darüber, welche Daten wir erheben und wie wir sie verwenden.
+    </p>
+    <p><strong>2. Allgemeine Hinweise und Pflichtinformationen</strong></p>
+    <p>
+      Verantwortlich für die Datenverarbeitung auf dieser Website ist:<br>
+      [Name des Betreibers]<br>
+      [Adresse]<br>
+      E-Mail: [E-Mail-Adresse]
+    </p>
+    <p><strong>3. Datenerfassung auf unserer Website</strong></p>
+    <p>
+      <u>Server-Log-Dateien:</u><br>
+      Der Hoster dieser Website (Render.com) erhebt und speichert automatisch Informationen in sogenannten Server-Log-Dateien, die Ihr Browser automatisch übermittelt. Dies sind u.a.:
+    </p>
+    <ul>
+      <li>Browsertyp und Browserversion</li>
+      <li>Verwendetes Betriebssystem</li>
+      <li>Referrer URL</li>
+      <li>Hostname des zugreifenden Rechners</li>
+      <li>Uhrzeit der Serveranfrage</li>
+      <li>IP-Adresse</li>
+    </ul>
+    <p>Diese Daten sind nicht bestimmten Personen zuordenbar. Eine Zusammenführung mit anderen Datenquellen wird nicht vorgenommen.</p>
+    <p>
+      <u>Cookies:</u><br>
+      Unsere Website verwendet technisch notwendige Cookies. Weitere Cookies (z. B. für Analyse oder externe Inhalte) werden nur mit Ihrer Einwilligung gesetzt.
+    </p>
+    <p><strong>4. Kontaktformular und Benutzerkonten</strong></p>
+    <p>
+      Wenn Sie uns per Kontaktformular Anfragen zukommen lassen oder ein Benutzerkonto erstellen, werden Ihre Angaben (z. B. Name, E-Mail) zwecks Bearbeitung und für Anschlussfragen gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.
+    </p>
+    <p><strong>5. Registrierung & Login</strong></p>
+    <p>
+      Beim Anlegen eines Kontos oder beim Login werden die eingegebenen Daten (z. B. E-Mail, Passwort) auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO verarbeitet. Die Datenübertragung erfolgt verschlüsselt.
+    </p>
+    <p><strong>6. Verarbeitung von Zahlungs- und Bestelldaten</strong></p>
+    <p>
+      Wenn Sie bei uns bestellen, speichern wir Ihre Bestell- und Zahlungsdaten im Rahmen gesetzlicher Aufbewahrungspflichten. Eine Weitergabe erfolgt nur an Dienstleister, die zur Abwicklung notwendig sind (z. B. Versanddienstleister).
+    </p>
+    <p><strong>7. Google Fonts & externe Inhalte</strong></p>
+    <p>
+      Diese Website verwendet Google Fonts lokal oder über Server von Google. Beim Laden können IP-Adressen an Google übertragen werden. Anbieter: Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland.
+    </p>
+    <p><strong>8. Ihre Rechte</strong></p>
+    <ul>
+      <li>Auskunft über Ihre gespeicherten Daten</li>
+      <li>Berichtigung oder Löschung Ihrer Daten</li>
+      <li>Einschränkung der Verarbeitung</li>
+      <li>Widerspruch gegen die Verarbeitung</li>
+      <li>Datenübertragbarkeit (sofern zutreffend)</li>
+    </ul>
+    <p>
+      Bitte wenden Sie sich hierfür an: [Ihre E-Mail-Adresse]
+    </p>
+    <p><strong>9. Beschwerderecht bei der Aufsichtsbehörde</strong></p>
+    <p>
+      Ihnen steht ein Beschwerderecht bei der zuständigen Datenschutzbehörde zu.
+    </p>
+    <p><strong>10. Verschlüsselung</strong></p>
+    <p>
+      Diese Seite nutzt aus Sicherheitsgründen eine SSL- bzw. TLS-Verschlüsselung.
+    </p>
+  </section>
+
+  <div class="chatbot-button" onclick="alert('Willkommen im FAQ-Chat! Was möchtest du wissen?')">💬</div>
+
+  <footer class="footer">
+    <div class="footer-section newsletter">
+      <h4>NEWSLETTER</h4>
+      <p>Abonniere unseren Newsletter 💗</p>
+      <input type="email" placeholder="Deine E-Mail" />
+      <button>Anmelden</button>
+    </div>
+
+    <div class="footer-section">
+      <h4>RECHTLICHES</h4>
+      <a href="../04 Rechtliches/01 Impressum.html">Impressum</a>
+      <a href="../04 Rechtliches/02 datenschutzerklärung.html">Datenschutzerklärung</a>
+      <a href="../04 Rechtliches/03 widerrufsbelehrung.html">Widerrufsbelehrung</a>
+      <a href="../04 Rechtliches/04 agb.html">AGB</a>
+      <a href="../04 Rechtliches/05 versand, zahlung & Lieferfristen.html">Versand, Zahlung & Lieferfristen</a>
+      <a href="../04 Rechtliches/06 cookie einstellungen.html">Cookie Einstellungen</a>
+    </div>
+
+    <div class="footer-section">
+      <h4>KUNDENSERVICE</h4>
+      <a href="../05 Kundenservice/01 faq.html">FAQ</a>
+      <a href="../05 Kundenservice/02 kontakt.html">Kontakt</a>
+      <a href="../05 Kundenservice/03 retourenportal.html">Retourenportal</a>
+    </div>
+
+    <div class="footer-section">
+      <h4>ONLINE SHOP SERVICE</h4>
+      <p><strong>Hast du eine Frage?</strong><br />
+        Schreibe uns eine E-Mail an <a href="mailto:kontakt@printyourgame.de">kontakt@printyourgame.de</a><br />
+        oder ruf uns an: <a href="tel:+491600000000">+49 160 0000000</a>
+      </p>
+      <p>Wir akzeptieren:</p>
+      <img src="paypal.png" alt="Visa" />
+      <img src="paypal.png" alt="PayPal" />
+      <img src="paypal.png" alt="Debit-Card" />
+      <img src="paypal.png" alt="Apple Pay" />
+      <img src="paypal.png" alt="Google Pay" />
+    </div>
+  </footer>
+</body>
+</html>

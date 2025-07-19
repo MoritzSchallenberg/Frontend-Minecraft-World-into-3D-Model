@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PrintYourGame – Dein Game-Welt-Druck</title>
+  <link rel="stylesheet" href="../style.css" />
+  <script src="../script.js"></script>
+</head>
+  
+<body>
+  <div id="cart-overlay" style="
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 320px;
+    height: 100%;
+    background: rgb(255, 255, 255);
+    box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+    transition: right 0.3s ease;
+    z-index: 9999;
+    padding: 20px;
+    overflow-y: auto;
+  ">
+    <h2>Warenkorb</h2>
+    <div id="cart-content"></div>
+    <button onclick="closeCart()" style="margin-top: 20px;">Schließen</button>
+  </div>
+  
+  <div class="top-bar">
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="../img/Instagramm.png" alt="Account Instagramm" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="../img/Twitter.png" alt="Account Twitter" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="../img/Tiktok.png" alt="Account Tiktok" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="../img/Youtube.png" alt="Account Youtube" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="../img/Pinterrest.png" alt="Account Pinterrest" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="../img/Facebook.png" alt="Account Facebook" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+  </div>
+
+  <div class="main-nav">
+    <a href="../index.html">
+      <img src="../img/logo.png" alt="PrintYourGame Logo" />
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../01 Oberer Reiter/01 Inspiration.html">Inspiration</a>
+      <a href="../01 Oberer Reiter/02 Start Gameprinter.html">Gameprinter</a>
+      <a href="../01 Oberer Reiter/03 merchshop.html">Unsere Produkte</a>
+      <a href="../01 Oberer Reiter/04 partnerstores.html">Partnerstores</a>
+      <a href="../01 Oberer Reiter/05 news.html">News</a>
+    </div>
+    <div class="nav-icons">
+      <img src="../img/search.png" alt="Suche" />
+      <a href="../00 sonstiges/02 favoriten.html" style="position: relative; display: inline-block;">
+        <img src="heart.png" " style="width: 40px; height: 30px;" />
+        <span id="cart-count" style="
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background-color: red;
+          color: rgb(0, 0, 0);
+          font-size: 12px;
+          padding: 2px 6px;
+          border-radius: 50%;
+          display: none;
+        ">0</span>
+      </a>
+      <a href="#" onclick="openCart(); return false;" style="position: relative; display: inline-block;">
+        <img src="../img/cart.png" " style="width: 30px; height: 30px;" />
+        <span id="cart-count" style="
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background-color: red;
+          color: rgb(0, 0, 0);
+          font-size: 12px;
+          padding: 2px 6px;
+          border-radius: 50%;
+          display: none;
+        ">0</span>
+      </a>
+      <a id="loginLink" href="../00 sonstiges/04 login.html">
+        <img src="../img/account-default.png" style="width: 30px; height: 30px;" />
+        <span id="cart-count" style="
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background-color: red;
+          color: rgb(0, 0, 0);
+          font-size: 12px;
+          padding: 2px 6px;
+          border-radius: 50%;
+          display: none;
+        ">0</span>
+      </a>
+      <div id="accountMenu" style="display: none; position: relative;">
+        <img src="../img/account-loggedin.png" class="account-icon" id="accountIcon" onclick="toggleDropdown()" style="width: 30px; height: 30px;" />
+        <div class="dropdown" id="dropdownMenu" style="display: none; position: absolute; top: 35px; right: 0; background: white; border: 1px solid #ccc; border-radius: 5px;">
+          <a href="../00 sonstiges/04 profil.html">👤 Mein Profil</a>
+          <a href="../00 sonstiges/05 bestellungen.html">📦 Bestellungen</a>
+          <a href="../00 sonstiges/06 Bewertungen.html">⭐ Bewertungen</a>
+          <a href="../00 sonstiges/07 Einstellungen.html"> Kontoeinstellungen</a>
+          <a href="#" onclick="logout()">🚪 Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <section class="section">
+    <h2>Häufig gestellte Fragen (FAQ)</h2>
+    <details>
+      <summary>Wie funktioniert der Gameprinter?</summary>
+      <p>
+        Unser Gameprinter verwandelt deine digitale Spielwelt – z. B. aus Minecraft, Roblox oder Sims – in ein echtes 3D-Modell.
+        Du lädst deine Welt oder dein Objekt hoch, wählst den gewünschten Bereich und wir kümmern uns um die Umwandlung, den Druck und den Versand.
+      </p>
+    </details>
+    <details>
+      <summary>Welche Dateiformate kann ich hochladen?</summary>
+      <p>
+        Aktuell akzeptieren wir Minecraft-Welten (.zip), .schematic-Dateien, .obj, .stl sowie .fbx für weitere 3D-Daten.
+        Sollte dein Format nicht unterstützt sein, kontaktiere uns bitte – oft finden wir eine Lösung.
+      </p>
+    </details>
+    <details>
+      <summary>Wie lange dauert die Produktion und Lieferung?</summary>
+      <p>
+        Die Produktionszeit beträgt in der Regel 3–7 Werktage, je nach Größe und Komplexität deines Modells.
+        Der Versand innerhalb Deutschlands dauert ca. 1–3 Werktage.
+      </p>
+    </details>
+    <details>
+      <summary>Wie groß wird mein 3D-Modell?</summary>
+      <p>
+        Du kannst beim Hochladen einen Maßstab festlegen (z. B. 1:100 oder 1 cm = 1 Block). Die maximale Druckgröße liegt bei 20 × 20 × 20 cm pro Element.
+        Größere Objekte werden ggf. in Segmenten gedruckt und zusammengesetzt.
+      </p>
+    </details>
+    <details>
+      <summary>Was passiert, wenn meine Welt oder Datei fehlerhaft ist?</summary>
+      <p>
+        Unsere Software prüft deine Datei vor dem Druck. Falls etwas nicht funktioniert oder wir Rückfragen haben, melden wir uns per E-Mail.
+        Es entstehen keine Kosten, solange wir noch nicht mit der Produktion begonnen haben.
+      </p>
+    </details>
+    <details>
+      <summary>Kann ich ein Modell vor dem Kauf als Vorschau sehen?</summary>
+      <p>
+        Ja! Nach dem Hochladen deiner Datei erhältst du eine 3D-Vorschau direkt im Browser.
+        Du kannst das Modell drehen, heranzoomen und dann den Druck beauftragen.
+      </p>
+    </details>
+    <details>
+      <summary>Kann ich mein Modell zurückgeben?</summary>
+      <p>
+        Da es sich um individuell für dich hergestellte Produkte handelt, ist ein Widerruf grundsätzlich ausgeschlossen.
+        Sollte das Modell beschädigt ankommen, ersetzen wir es selbstverständlich.
+      </p>
+    </details>
+    <details>
+      <summary>Was kostet ein Druck?</summary>
+      <p>
+        Der Preis richtet sich nach Größe, Materialverbrauch und Aufwand. Eine kleine Hausstruktur liegt bei ca. 15–30 €,
+        größere Modelle bei 40–90 €. Die exakte Kalkulation erhältst du nach dem Hochladen.
+      </p>
+    </details>
+    <details>
+      <summary>Welche Zahlungsmethoden werden akzeptiert?</summary>
+      <p>
+        Wir akzeptieren PayPal, Kreditkarte und Banküberweisung (Vorkasse). Weitere Infos findest du auf der Seite <a href="versand.html">Versand & Zahlung</a>.
+      </p>
+    </details>
+  </section>
+
+  <div class="chatbot-button" onclick="alert('Willkommen im FAQ-Chat! Was möchtest du wissen?')">💬</div>
+
+  <footer class="footer">
+    <div class="footer-section newsletter">
+      <h4>NEWSLETTER</h4>
+      <p>Abonniere unseren Newsletter 💗</p>
+      <input type="email" placeholder="Deine E-Mail" />
+      <button>Anmelden</button>
+    </div>
+
+    <div class="footer-section">
+      <h4>RECHTLICHES</h4>
+      <a href="../04 Rechtliches/01 Impressum.html">Impressum</a>
+      <a href="../04 Rechtliches/02 datenschutzerklärung.html">Datenschutzerklärung</a>
+      <a href="../04 Rechtliches/03 widerrufsbelehrung.html">Widerrufsbelehrung</a>
+      <a href="../04 Rechtliches/04 agb.html">AGB</a>
+      <a href="../04 Rechtliches/05 versand, zahlung & Lieferfristen.html">Versand, Zahlung & Lieferfristen</a>
+      <a href="../04 Rechtliches/06 cookie einstellungen.html">Cookie Einstellungen</a>
+    </div>
+
+    <div class="footer-section">
+      <h4>KUNDENSERVICE</h4>
+      <a href="../05 Kundenservice/01 faq.html">FAQ</a>
+      <a href="../05 Kundenservice/02 kontakt.html">Kontakt</a>
+      <a href="../05 Kundenservice/03 retourenportal.html">Retourenportal</a>
+    </div>
+
+    <div class="footer-section">
+      <h4>ONLINE SHOP SERVICE</h4>
+      <p><strong>Hast du eine Frage?</strong><br />
+        Schreibe uns eine E-Mail an <a href="mailto:kontakt@printyourgame.de">kontakt@printyourgame.de</a><br />
+        oder ruf uns an: <a href="tel:+491600000000">+49 160 0000000</a>
+      </p>
+      <p>Wir akzeptieren:</p>
+      <img src="paypal.png" alt="Visa" />
+      <img src="paypal.png" alt="PayPal" />
+      <img src="paypal.png" alt="Debit-Card" />
+      <img src="paypal.png" alt="Apple Pay" />
+      <img src="paypal.png" alt="Google Pay" />
+    </div>
+  </footer>
+</body>
+</html>

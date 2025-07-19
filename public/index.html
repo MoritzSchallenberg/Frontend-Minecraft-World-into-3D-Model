@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PrintYourGame – Dein Game-Welt-Druck</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js"></script>
+</head>
+
+<body>
+  <div id="cart-overlay" style="
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 320px;
+    height: 100%;
+    background: rgb(255, 255, 255);
+    box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+    transition: right 0.3s ease;
+    z-index: 9999;
+    padding: 20px;
+    overflow-y: auto;
+  ">
+    <h2>Warenkorb</h2>
+    <div id="cart-content"></div>
+    <button onclick="closeCart()" style="margin-top: 20px;">Schließen</button>
+  </div>
+  
+  <div class="top-bar">
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="img/Instagramm.png" alt="Account Instagramm" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="img/Twitter.png" alt="Account Twitter" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="img/Tiktok.png" alt="Account Tiktok" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="img/Youtube.png" alt="Account Youtube" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="img/Pinterrest.png" alt="Account Pinterrest" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="img/Facebook.png" alt="Account Facebook" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+  </div>
+
+  <div class="main-nav">
+    <a href="index.html">
+      <img src="img/logo.png" alt="PrintYourGame Logo" />
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="01 Oberer Reiter/01 Inspiration.html">Inspiration</a>
+      <a href="01 Oberer Reiter/02 Start Gameprinter.html">Gameprinter</a>
+      <a href="01 Oberer Reiter/03 merchshop.html">Unsere Produkte</a>
+      <a href="01 Oberer Reiter/04 partnerstores.html">Partnerstores</a>
+      <a href="01 Oberer Reiter/05 news.html">News</a>
+    </div>
+    <div class="nav-icons">
+      <img src="img/search.png" alt="Suche" />
+      <a href="00 sonstiges/02 favoriten.html" style="position: relative; display: inline-block;">
+        <img src="heart.png" " style="width: 40px; height: 30px;" />
+        <span id="cart-count" style="
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background-color: red;
+          color: rgb(0, 0, 0);
+          font-size: 12px;
+          padding: 2px 6px;
+          border-radius: 50%;
+          display: none;
+        ">0</span>
+      </a>
+      <a href="#" onclick="openCart(); return false;" style="position: relative; display: inline-block;">
+        <img src="img/cart.png" " style="width: 30px; height: 30px;" />
+        <span id="cart-count" style="
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background-color: red;
+          color: rgb(0, 0, 0);
+          font-size: 12px;
+          padding: 2px 6px;
+          border-radius: 50%;
+          display: none;
+        ">0</span>
+      </a>
+      <a id="loginLink" href="00 sonstiges/04 login.html">
+        <img src="img/account-default.png" style="width: 30px; height: 30px;" />
+        <span id="cart-count" style="
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background-color: red;
+          color: rgb(0, 0, 0);
+          font-size: 12px;
+          padding: 2px 6px;
+          border-radius: 50%;
+          display: none;
+        ">0</span>
+      </a>
+      <div id="accountMenu" style="display: none; position: relative;">
+        <img src="img/account-loggedin.png" class="account-icon" id="accountIcon" onclick="toggleDropdown()" style="width: 30px; height: 30px;" />
+        <div class="dropdown" id="dropdownMenu" style="display: none; position: absolute; top: 35px; right: 0; background: white; border: 1px solid #ccc; border-radius: 5px;">
+          <a href="00 sonstiges/04 profil.html">👤 Mein Profil</a>
+          <a href="00 sonstiges/05 bestellungen.html">📦 Bestellungen</a>
+          <a href="00 sonstiges/06 Bewertungen.html">⭐ Bewertungen</a>
+          <a href="00 sonstiges/07 Einstellungen.html"> Kontoeinstellungen</a>
+          <a href="#" onclick="logout()">🚪 Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="slider">
+    <div class="slides">
+      <img src="printyourgametolife.jpg" alt="printyourgametolife" />
+    </div>
+  </section>
+  
+  <section class="section-grid">
+    <div class="card">
+      <img src="bilder/blau.png" alt="3D passion">
+      <h3>Print your passion in 3D</h3>
+      <p>Transform your Minecraft, Sims, or Roblox builds into real 3D-printed art. Upload your world and get a custom piece for your desk or shelf.</p>
+      <a href="#">Start Gameprinter →</a>
+    </div>
+
+    <div class="card">
+      <img src="bilder/controller.png" alt="Custom Parts">
+      <h3>Custom parts</h3>
+      <p>You need something else, like a 3D Model for School. You can also upload it and we print and send it to you.</p>
+      <a href="#">Here to Building Tool →</a>
+    </div>
+
+    <div class="card">
+      <img src="bilder/deko.png" alt="Need Inspitation">
+      <h3>Get Ideas what you want to build next</h3>
+      <p>Get more Ideas, what to build next. And look at what other people have build.</p>
+      <a href="#">Shop decor →</a>
+    </div>
+
+    <div class="card">
+      <img src="bilder/werkstatt.png" alt="Questions">
+      <h3>Have any questions</h3>
+      <p>Go to our answer bot and get your quesiton answered.</p>
+      <a href="#">Here to self Builder →</a>
+    </div>
+  </section>
+
+  <section style="padding: 80px 10%; background: #ffffff;">
+    <div style="text-align: center; max-width: 900px; margin: auto;">
+      <h2 style="font-size: 36px; margin-bottom: 20px;">See other products</h2>
+      <p style="font-size: 17px; color: #444;">
+        Next to our GamePrintingService, we are also offering a lot of other 3D Printed Products. Just click and see all products.
+      </p>
+    </div>
+
+    <div class="image-grid">
+      <a href="03 Produkte/01 Minecraft Merch.html">
+        <img src="img/Minecraft Merch.png" alt="Minecraft Merch" />
+      </a>
+      <a href="03 Produkte/02 Sims Merch.html">
+        <img src="img/Sims Merch.png" alt="Sims Merch" />
+      </a>
+      <a href="03 Produkte/03 Roblox Merch.html">
+        <img src="img/Roblox Merch.png" alt="Roblox Merch" />
+      </a>
+      <a href="03 Produkte/04 Clash of Clans Merch.html">
+        <img src="img/Clash of Clans Merch.png" alt="Clash of Clans Merch" />
+      </a>
+      <a href="03 Produkte/05 Dekoration.html">
+        <img src="img/Dekoration.png" alt="Dekoration" />
+      </a>
+      <a href="03 Produkte/06 Replacement Parts.html">
+        <img src="img/Replacement Parts.png" alt="Replacement Parts" />
+      </a>
+      <a href="03 Produkte/07 Technical Gadgets.html">
+        <img src="img/Technical Gadgets.png" alt="Technical Gadgets" />
+      </a>
+      <a href="03 Produkte/08 Gift.html">
+        <img src="img/Gifts.png" alt="Gifts" />
+      </a>
+      <a href="03 Produkte/09 Games.html">
+        <img src="img/Games.png" alt="Games" />
+      </a>
+      <a href="03 Produkte/10. Werbemittel.html">
+        <img src="img/Werbeartikel.png" alt="Werbeartikel" />
+      </a>
+    </div>
+  </section>
+
+  <div class="chatbot-button" onclick="alert('Willkommen im FAQ-Chat! Was möchtest du wissen?')">💬</div>
+
+
+  <div id="cookie-banner">
+    <div class="cookie-banner-content">
+      <p>
+        Diese Website verwendet Cookies. Einige sind essenziell, andere helfen uns, Inhalte zu optimieren (z. B. Medien, Analyse). Mehr dazu in unserer <a href="cookies.html">Cookie-Erklärung</a>.
+      </p>
+      <div class="cookie-buttons">
+        <button onclick="acceptAllCookies()">Alle akzeptieren</button>
+        <button onclick="declineOptionalCookies()">Nur notwendige</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-section newsletter">
+      <h4>NEWSLETTER</h4>
+      <p>Abonniere unseren Newsletter 💗</p>
+      <input type="email" placeholder="Deine E-Mail" />
+      <button>Anmelden</button>
+    </div>
+
+    <div class="footer-section">
+      <h4>RECHTLICHES</h4>
+      <a href="04 Rechtliches/01 Impressum.html">Impressum</a>
+      <a href="04 Rechtliches/02 datenschutzerklärung.html">Datenschutzerklärung</a>
+      <a href="04 Rechtliches/03 widerrufsbelehrung.html">Widerrufsbelehrung</a>
+      <a href="04 Rechtliches/04 agb.html">AGB</a>
+      <a href="04 Rechtliches/05 versand, zahlung & Lieferfristen.html">Versand, Zahlung & Lieferfristen</a>
+      <a href="04 Rechtliches/06 cookie einstellungen.html">Cookie Einstellungen</a>
+    </div>
+
+    <div class="footer-section">
+      <h4>KUNDENSERVICE</h4>
+      <a href="05 Kundenservice/01 faq.html">FAQ</a>
+      <a href="05 Kundenservice/02 kontakt.html">Kontakt</a>
+      <a href="05 Kundenservice/03 retourenportal.html">Retourenportal</a>
+    </div>
+
+    <div class="footer-section">
+      <h4>ONLINE SHOP SERVICE</h4>
+      <p><strong>Hast du eine Frage?</strong><br />
+        Schreibe uns eine E-Mail an <a href="mailto:kontakt@printyourgame.de">kontakt@printyourgame.de</a><br />
+        oder ruf uns an: <a href="tel:+491600000000">+49 160 0000000</a>
+      </p>
+      <p>Wir akzeptieren:</p>
+      <img src="paypal.png" alt="Visa" />
+      <img src="paypal.png" alt="PayPal" />
+      <img src="paypal.png" alt="Debit-Card" />
+      <img src="paypal.png" alt="Apple Pay" />
+      <img src="paypal.png" alt="Google Pay" />
+    </div>
+  </footer>
+</body>
+</html>
