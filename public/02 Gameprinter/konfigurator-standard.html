@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bearbeitungsmodus – 3D Modell</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      height: 100vh;
+      font-family: sans-serif;
+    }
+    .sidebar {
+      width: 250px;
+      background: #f0f0f0;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .main-view {
+      flex-grow: 1;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .top-controls {
+      background: #ddd;
+      padding: 0.5rem;
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    model-viewer {
+      flex-grow: 1;
+      border: none;
+    }
+    .right-nav {
+      width: 100px;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .nav-btn {
+      padding: 0.5rem 1rem;
+      background: #333;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      color: white;
+      font-size: 1.2rem;
+      flex-direction: column;
+    }
+    .spinner {
+      margin-top: 10px;
+      width: 40px; height: 40px;
+      border: 5px solid #ccc;
+      border-top: 5px solid orange;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Linke Navigation -->
+  <div class="sidebar">
+    <button class="nav-btn" onclick="window.history.back()">← Zurück</button>
+    <div>
+      <h3>Datei hochladen</h3>
+      <input type="file" id="modelUpload" style="display:none;" />
+    </div>
+    <div></div>
+  </div>
+
+  <!-- Hauptansicht -->
+  <div class="main-view">
+    <div class="top-controls">
+      <button onclick="setFloor()">Boden bündig</button>
+      <button onclick="setCenter()">Mittig platzieren</button>
+    </div>
+    <model-viewer id="viewer" camera-controls auto-rotate></model-viewer>
+  </div>
+
+  <!-- Rechte Navigation -->
+  <div class="right-nav">
+    <button class="nav-btn" onclick="goNext()">Weiter →</button>
+  </div>
+
+  <!-- Overlay -->
+  <div id="waitOverlay" class="overlay">
+    <div>Modell wird verarbeitet...</div>
+    <div>Bisher: <span id="elapsedTime">0s</span> / Normal: <span id="normalTime">20s</span></div>
+    <div class="spinner"></div>
+  </div>
+
+  <script>
+    let viewer = document.getElementById('viewer');
+    let startTime;
+
+    window.onload = () => {
+      document.getElementById("modelUpload").click();
+    };
+
+    document.getElementById("modelUpload").addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      // Overlay anzeigen
+      const overlay = document.getElementById("waitOverlay");
+      overlay.style.display = "flex";
+      startTimer();
+
+      const formData = new FormData();
+      formData.append("model", file);
+
+      const res = await fetch("/api/slice-model", { method: "POST", body: formData });
+      const data = await res.json();
+
+      overlay.style.display = "none";
+
+      const url = URL.createObjectURL(file);
+      viewer.setAttribute("src", url);
+
+      // Daten speichern für Schritt 3
+      localStorage.setItem("modelUrl", url);
+      localStorage.setItem("slicedModelUrl", data.slicedModelUrl || "");
+      localStorage.setItem("price", data.price || "0,00 €");
+    });
+
+    function startTimer() {
+      startTime = Date.now();
+      const normalTime = 20;
+      setInterval(() => {
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        document.getElementById("elapsedTime").textContent = `${elapsed}s`;
+        document.getElementById("normalTime").textContent = `${normalTime}s`;
+      }, 500);
+    }
+
+    function setFloor() {
+      alert("Boden bündig gesetzt (Logik folgt)");
+    }
+
+    function setCenter() {
+      alert("Mittig platziert (Logik folgt)");
+    }
+
+    function goNext() {
+      window.location.href = "produktansicht.html";
+    }
+  </script>
+</body>
+</html>

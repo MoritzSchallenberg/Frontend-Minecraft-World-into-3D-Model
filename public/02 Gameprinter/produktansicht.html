@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Produktansicht – 3D Modell</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      height: 100vh;
+      font-family: sans-serif;
+    }
+    .sidebar {
+      width: 250px;
+      background: #f0f0f0;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .main-view {
+      flex-grow: 1;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+    }
+    .viewers {
+      display: flex;
+      gap: 1rem;
+      flex-grow: 1;
+    }
+    model-viewer {
+      flex: 1;
+      border: 1px solid #ccc;
+    }
+    .details {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .right-nav {
+      width: 120px;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .nav-btn {
+      padding: 0.5rem 1rem;
+      background: #333;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Linke Navigation -->
+  <div class="sidebar">
+    <button class="nav-btn" onclick="window.history.back()">← Zurück</button>
+    <div>
+      <h3>Produkttitel</h3>
+      <input type="text" id="productTitle" placeholder="Mein 3D-Modell" style="width:100%; padding:5px;"/>
+    </div>
+    <div></div>
+  </div>
+
+  <!-- Hauptansicht -->
+  <div class="main-view">
+    <div class="viewers">
+      <model-viewer id="originalViewer" camera-controls></model-viewer>
+      <model-viewer id="slicedViewer" camera-controls></model-viewer>
+    </div>
+    <div class="details">
+      <div>
+        <label>Material:</label>
+        <select id="materialSelect"></select>
+      </div>
+      <div>
+        <strong>Preis:</strong> <span id="price">0,00 €</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rechte Navigation -->
+  <div class="right-nav">
+    <button class="nav-btn" onclick="createProduct()">Produkt erstellen</button>
+  </div>
+
+  <script>
+    let materialSelect = document.getElementById("materialSelect");
+    let baseVolume = parseFloat(localStorage.getItem("modelVolume")) || 0;
+    let calculatedPrice = 0;
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      const mats = await fetch("/api/materials").then(r => r.json());
+      mats.forEach(m => {
+        const opt = document.createElement("option");
+        opt.value = m._id;
+        opt.dataset.pricePerCm3 = m.costPerCm3;
+        opt.textContent = `${m.name} (${(m.costPerCm3 * 1000).toFixed(2)} €/kg)`;
+        materialSelect.appendChild(opt);
+      });
+
+      // Preis sofort mit erstem Material berechnen
+      if (mats.length > 0) {
+        materialSelect.selectedIndex = 0;
+        updatePrice();
+      }
+
+      // Viewer-Modelle laden
+      document.getElementById("originalViewer").setAttribute("src", localStorage.getItem("modelUrl") || "");
+      document.getElementById("slicedViewer").setAttribute("src", localStorage.getItem("slicedModelUrl") || "");
+
+      // Preisupdate bei Materialwechsel
+      materialSelect.addEventListener("change", updatePrice);
+    });
+
+    function updatePrice() {
+      const selectedOption = materialSelect.options[materialSelect.selectedIndex];
+      const costPerCm3 = parseFloat(selectedOption.dataset.pricePerCm3) || 0;
+      let total = baseVolume * costPerCm3;
+      total += total * 0.3; // 30% Aufschlag
+
+      // Runden auf 0,24 / 0,49 / 0,74 / 0,99
+      const cents = [0.24, 0.49, 0.74, 0.99];
+      const euro = Math.floor(total);
+      const centVal = cents.find(c => total <= euro + c) || 0.99;
+      total = euro + centVal;
+
+      calculatedPrice = total;
+      document.getElementById("price").textContent = `${total.toFixed(2)} €`;
+    }
+
+    function createProduct() {
+      const title = document.getElementById("productTitle").value;
+      const material = materialSelect.value;
+      alert(`Produkt "${title}" mit Material ${material} wird erstellt. Preis: ${calculatedPrice.toFixed(2)} €`);
+      // Hier: POST an Backend mit Produktdaten
+    }
+  </script>
+</body>
+</html>

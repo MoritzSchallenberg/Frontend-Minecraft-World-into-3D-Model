@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PrintYourGame – Konfigurator Auswahl</title>
+  <link rel="stylesheet" href="../style.css" />
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const searchInput = document.getElementById("searchInput");
+      const categories = document.querySelectorAll(".category");
+
+      searchInput.addEventListener("input", () => {
+        const query = searchInput.value.toLowerCase();
+        let foundAny = false;
+
+        categories.forEach(category => {
+          let foundInCategory = false;
+          category.querySelectorAll(".option-card").forEach(option => {
+            const text = option.textContent.toLowerCase();
+            const match = text.includes(query);
+            option.style.display = match ? "block" : "none";
+            if (match) foundInCategory = true;
+          });
+
+          category.style.display = foundInCategory ? "block" : "none";
+          if (foundInCategory) foundAny = true;
+        });
+
+        document.getElementById("noResults").style.display = foundAny ? "none" : "block";
+      });
+    });
+    
+    function startKonfigurator(type) {
+      // Optional: Typ im Storage speichern
+      localStorage.setItem("konfiguratorType", type);
+      // Weiterleitung zu passender Bearbeitungsseite
+      if (type === "minecraft") {
+        window.location.href = "konfigurator-minecraft.html";
+      } else {
+        window.location.href = "konfigurator-standard.html";
+      }
+    }
+  </script>
+</head>
+<body>
+  <!-- Header -->
+  <div class="top-bar">
+    <!-- Social Links (aus deinem bestehenden Code übernommen) -->
+    <a href="https://www.instagram.com/deinprofil" target="_blank">
+      <img src="../img/Instagramm.png" alt="Instagram" style="width: 30px; height: 30px;" />
+      <span>@printyourgame</span>
+    </a>
+    <!-- weitere Icons... -->
+  </div>
+
+  <div class="main-nav">
+    <a href="../index.html">
+      <img src="../img/logo.png" alt="PrintYourGame Logo" />
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../01 Oberer Reiter/01 Inspiration.html">Inspiration</a>
+      <a href="../01 Oberer Reiter/02 Start Gameprinter.html">Gameprinter</a>
+      <a href="../01 Oberer Reiter/03 merchshop.html">Unsere Produkte</a>
+      <a href="../01 Oberer Reiter/04 partnerstores.html">Partnerstores</a>
+      <a href="../01 Oberer Reiter/05 news.html">News</a>
+    </div>
+  </div>
+
+  <!-- Inhalt -->
+  <section style="padding: 40px 10%;">
+    <h1>Wonach suchen Sie?</h1>
+    <input type="text" id="searchInput" placeholder="Konfigurator suchen..." style="width: 100%; padding: 10px; margin: 20px 0;">
+
+    <!-- Kategorien -->
+    <div class="category">
+      <h2>Minecraft</h2>
+      <div class="option-card" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+        Minecraft Welten Konfigurator
+        <button onclick="location.href='konfigurator-minecraft.html'">Starten</button>
+      </div>
+    </div>
+
+    <div class="category">
+      <h2>Sonstige 3D-Modelle</h2>
+      <div class="option-card" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+        Standard 3D-Modell-Konfigurator
+        <button onclick="location.href='konfigurator-standard.html'">Starten</button>
+        <button onclick="startKonfigurator('minecraft')">Minecraft starten</button>
+        <button onclick="startKonfigurator('standard')">Standard starten</button>
+      </div>
+    </div>
+
+    <!-- Keine Ergebnisse -->
+    <div id="noResults" style="display:none; margin-top: 30px;">
+      <p>Sie finden es nicht? Schlagen Sie uns vor, was wir noch hinzufügen könnten:</p>
+      <input type="text" placeholder="Ihre Idee..." style="width: 100%; padding: 10px;">
+      <button>Vorschlag senden</button>
+    </div>
+
+    <!-- Vorschlag immer unten -->
+    <div style="margin-top: 40px;">
+      <p>Fehlt Ihnen etwas? Schlagen Sie uns vor, was wir noch hinzufügen könnten:</p>
+      <input type="text" placeholder="Ihre Idee..." style="width: 100%; padding: 10px;">
+      <button>Vorschlag senden</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <!-- Newsletter, Rechtliches, Kundendienst (aus deinem Code übernommen) -->
+    <div class="footer-section newsletter">
+      <h4>NEWSLETTER</h4>
+      <p>Abonniere unseren Newsletter 💗</p>
+      <input type="email" placeholder="Deine E-Mail" />
+      <button>Anmelden</button>
+    </div>
+    <!-- weitere Footer-Spalten... -->
+  </footer>
+</body>
+</html>
