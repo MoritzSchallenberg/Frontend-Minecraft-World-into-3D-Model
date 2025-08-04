@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PrintYourGame – Materialien</title>
+  <link rel="stylesheet" href="../../admin.css" />
+</head>
+
+<body>  
+  <div class="main-nav">
+    <img src="../../img/logo.png" alt="PrintYourGame Logo" />
+    <div class="nav-links">
+      <a href="../../admin.html">Overview</a>
+      <a href="../01 Analyse.html">Analyse</a>
+      <a href="../02 Produkt.html">Produkt</a>
+      <a href="../03 Mails.html">Mails</a>
+      <a href="../04 Aufträge.html">Aufträge</a>
+      <a href="../05 support.html">Support</a>
+      <a href="../06 Einstellungen.html">Einstellungen</a>
+    </div>
+    <div>
+      <a href="../../index.html">Zurück zum Store</a>
+    </div>
+  </div>
+
+<h1>Material hinzufügen</h1>
+<form id="materialForm">
+  <input name="name" placeholder="Materialname" required /><br />
+  <input name="costPerCm3" type="number" step="0.01" placeholder="Kosten €/cm³" required /><br />
+  <textarea name="shortDescription" placeholder="Kurze Beschreibung (für Konfigurator)" rows="2"></textarea><br />
+  <textarea name="longDescription" placeholder="Lange Beschreibung (für Produktansicht)" rows="4"></textarea><br />
+  <button type="submit">Hinzufügen</button>
+</form>
+
+<h2>Vorhandene Materialien</h2>
+<div id="materialsList">Wird geladen...</div>
+
+<script>
+// Materialien laden
+async function loadMaterials() {
+  const list = document.getElementById("materialsList");
+  list.innerHTML = "Wird geladen...";
+  const res = await fetch("/api/materials");
+  const mats = await res.json();
+  list.innerHTML = "";
+
+  if (mats.length === 0) {
+    list.innerHTML = "<p>Keine Materialien vorhanden.</p>";
+    return;
+  }
+
+  mats.forEach(mat => {
+    const item = document.createElement("div");
+    item.style.border = "1px solid #ccc";
+    item.style.margin = "5px 0";
+    item.style.padding = "5px";
+
+    const title = document.createElement("strong");
+    title.textContent = `${mat.name} – ${(mat.costPerCm3 * 1000).toFixed(2)} €/kg`;
+    item.appendChild(title);
+
+    const desc = document.createElement("p");
+    desc.textContent = mat.shortDescription;
+    item.appendChild(desc);
+
+    const btn = document.createElement("button");
+    btn.textContent = "Löschen";
+    btn.style.background = "#c00";
+    btn.style.color = "white";
+    btn.style.marginTop = "5px";
+    btn.onclick = async () => {
+      if (confirm(`Material "${mat.name}" wirklich löschen?`)) {
+        const delRes = await fetch(`/api/materials/${mat._id}`, { method: "DELETE" });
+        if (delRes.ok) {
+          loadMaterials();
+        } else {
+          alert("Fehler beim Löschen");
+        }
+      }
+    };
+    item.appendChild(btn);
+
+    list.appendChild(item);
+  });
+}
+
+// Neues Material hinzufügen
+document.getElementById("materialForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    name: form.name.value,
+    costPerCm3: parseFloat(form.costPerCm3.value),
+    shortDescription: form.shortDescription.value,
+    longDescription: form.longDescription.value
+  };
+  const res = await fetch("/api/materials/add", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+  if (res.ok) {
+    alert("Material hinzugefügt!");
+    form.reset();
+    loadMaterials();
+  } else {
+    alert("Fehler beim Hinzufügen");
+  }
+});
+
+// Beim Laden direkt Materialien anzeigen
+loadMaterials();
+</script>
+</body>
+</html>

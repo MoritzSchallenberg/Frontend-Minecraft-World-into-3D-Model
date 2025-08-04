@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PrintYourGame – Dein Game-Welt-Druck</title>
+  <link rel="stylesheet" href="../admin.css" />
+  <script src="../admin.js"></script>
+</head>
+  
+<body>
+  <div class="main-nav">
+    <img src="../img/logo.png" alt="PrintYourGame Logo" />
+    <div class="nav-links">
+      <a href="../admin.html">Overview</a>
+      <a href="01 Analyse.html">Analyse</a>
+      <a href="02 Produkt.html">Produkt</a>
+      <a href="03 Mails.html">Mails</a>
+      <a href="04 Aufträge.html">Aufträge</a>
+      <a href="05 support.html">Support</a>
+      <a href="06 Einstellungen.html">Einstellungen</a>
+    </div>
+    <div>
+      <a href="../index.html">Zurück zum Store</a>
+    </div>
+  </div>
+  
+  <div class="product-container">
+    <form id="product-form">
+      <div class="product-info">
+        <h1 id="form-title">Neues Produkt</h1>
+        <label for="name">Produktname</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="description">Beschreibung</label>
+        <textarea id="description" name="description" required></textarea>
+
+        <label for="price">Preis in Euro</label>
+        <input type="number" id="price" name="price" step="0.01" required />
+
+        <label for="categories">Kategorien (mit Kommas trennen)</label>
+        <input type="text" id="categories" name="categories" />
+
+        <label for="shippingCategory">Versandkategorie</label>
+        <input type="text" id="shippingCategory" name="shippingCategory" />
+
+        <label for="productionCost">Produktionskosten</label>
+        <input type="number" id="productionCost" name="productionCost" step="0.01" />
+
+        <label for="status">Status</label>
+        <select id="status" name="status">
+          <option value="Entwurf">Entwurf</option>
+          <option value="Aktiv">Aktiv</option>
+          <option value="Archiviert">Archiviert</option>
+        </select>
+
+        <label for="viewTemplate">Template</label>
+        <select id="viewTemplate" name="viewTemplate">
+          <option value="classic">Classic</option>
+          <option value="3dOnly">3D Only</option>
+          <option value="bundle">Bundle</option>
+        </select>
+
+        <button type="submit">Speichern</button>
+      </div>
+
+      <div class="product-images">
+        <label for="modelUrl">3D-Modell URL</label>
+        <input type="url" id="modelUrl" name="modelUrl" />
+
+        <label for="images">Produktbilder (URLs, Komma-getrennt)</label>
+        <textarea id="images" name="images"></textarea>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PrintYourGame – Dein Game-Welt-Druck</title>
+  <link rel="stylesheet" href="../admin.css" />
+  <script src="../admin.js"></script>
+</head>
+  
+<body>
+  <div class="main-nav">
+    <img src="../img/logo.png" alt="PrintYourGame Logo" />
+    <div class="nav-links">
+      <a href="../admin.html">Overview</a>
+      <a href="01 Analyse.html">Analyse</a>
+      <a href="02 Produkt.html">Produkt</a>
+      <a href="03 Mails.html">Mails</a>
+      <a href="04 Aufträge.html">Aufträge</a>
+      <a href="05 support.html">Support</a>
+      <a href="06 Einstellungen.html">Einstellungen</a>
+    </div>
+    <div>
+      <a href="../index.html">Zurück zum Store</a>
+    </div>
+  </div>
+  
+  <section>
+    <h1>Archivierte Produkte</h1>
+    <div class="toolbar">
+      <button onclick="massUnarchive()">Ausgewählte wiederherstellen</button>
+      <button onclick="massDelete()">Ausgewählte löschen</button>
+    </div>
+    <div id="archived-list" class="product-listing"></div>
+  </section>
+
+  <script>
+    let archivedProducts = [];
+
+    async function loadArchivedProducts() {
+      const res = await fetch("/api/products");
+      const products = await res.json();
+      archivedProducts = products.filter(p => p.status === "Archiviert");
+
+      const container = document.getElementById("archived-list");
+      container.innerHTML = "";
+
+      archivedProducts.forEach(product => {
+        const div = document.createElement("div");
+        div.className = "product-item";
+        div.innerHTML = `
+          <input type="checkbox" class="select-product" data-id="${product._id}" style="margin-right: 10px;">
+          <img src="${product.images[0] || '../img/placeholder.png'}" alt="${product.name}" style="width: 100px; height: auto;">
+          <div>
+            <strong>${product.name}</strong><br>
+            Kategorie: ${product.categories.join(", ")}<br>
+            Preis: ${product.price} €<br>
+            Status: ${product.status}
+          </div>
+          <button onclick="unarchiveProduct('${product._id}')">Wiederherstellen</button>
+          <button onclick="deleteProduct('${product._id}')">Löschen</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    async function unarchiveProduct(id) {
+      const res = await fetch(`/api/products/${id}`);
+      const product = await res.json();
+      product.status = "Entwurf";
+
+      await fetch(`/api/products/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(product)
+      });
+
+      loadArchivedProducts();
+    }
+
+    async function deleteProduct(id) {
+      if (!confirm("Dieses Produkt wirklich dauerhaft löschen?")) return;
+
+      await fetch(`/api/products/${id}`, {
+        method: "DELETE"
+      });
+
+      loadArchivedProducts();
+    }
+
+    async function massUnarchive() {
+      const ids = getSelectedIds();
+      for (const id of ids) {
+        const res = await fetch(`/api/products/${id}`);
+        const product = await res.json();
+        product.status = "Entwurf";
+
+        await fetch(`/api/products/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(product)
+        });
+      }
+      loadArchivedProducts();
+    }
+
+    async function massDelete() {
+      const ids = getSelectedIds();
+      if (!confirm("${ids.length} Produkt(e) wirklich löschen?")) return;
+
+      for (const id of ids) {
+        await fetch(`/api/products/${id}`, { method: "DELETE" });
+      }
+      loadArchivedProducts();
+    }
+
+    function getSelectedIds() {
+      return Array.from(document.querySelectorAll(".select-product:checked"))
+        .map(cb => cb.getAttribute("data-id"));
+    }
+
+    document.addEventListener("DOMContentLoaded", loadArchivedProducts);
+  </script>
+
+</body>
+</html>

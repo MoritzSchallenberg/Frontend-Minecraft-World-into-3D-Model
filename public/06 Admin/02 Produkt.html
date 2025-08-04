@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PrintYourGame – Dein Game-Welt-Druck</title>
+  <link rel="stylesheet" href="../admin.css" />
+  <script src="../admin.js"></script>
+</head>
+  
+<body>
+  <div class="main-nav">
+    <img src="../img/logo.png" alt="PrintYourGame Logo" />
+    <div class="nav-links">
+      <a href="../admin.html">Overview</a>
+      <a href="01 Analyse.html">Analyse</a>
+      <a href="02 Produkt.html">Produkt</a>
+      <a href="03 Mails.html">Mails</a>
+      <a href="04 Aufträge.html">Aufträge</a>
+      <a href="05 support.html">Support</a>
+      <a href="06 Einstellungen.html">Einstellungen</a>
+    </div>
+    <div>
+      <a href="../index.html">Zurück zum Store</a>
+    </div>
+  </div>
+  
+  <section>
+    <h1>Produktübersicht</h1>
+    <div class="toolbar">
+      <button onclick="window.location.href='02.1 Produktbearbeiten.html'">Neues Produkt hinzufügen</button>
+      <button onclick="window.location.href='02.2 Kategorieverwaltung.html'">Kategorien</button>
+      <button onclick="window.location.href='02.3 archivierte produkte.html'">Archiv</button>
+      <select id="statusFilter" onchange="loadProductList()">
+        <option value="Alle">Alle</option>
+        <option value="Aktiv">Aktiv</option>
+        <option value="Entwurf">Entwurf</option>
+        <option value="Archiviert">Archiviert</option>
+      </select>
+    </div>
+
+    <div id="product-list" class="product-listing"></div>
+  </section>
+
+  <div id="category-modal">
+    <h3>Kategorien zuweisen</h3>
+    <div id="category-options"></div>
+    <button onclick="saveCategoryAssignment()">Speichern</button>
+    <button onclick="document.getElementById('category-modal').classList.remove('active')">Schließen</button>
+  </div>
+
+</body>
+</html>
